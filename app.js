@@ -6,7 +6,8 @@ var querystring = require('querystring');
 var url = require('url');
 
 var events = [{newtodo: "calhacks!", newstart: '10', aorp: 'a'}];
-
+var sevents = ["calhacks!"];
+//initialize sevents like u did for events
 function Event(newtodo, newstart, aorp) {
     this.newtodo = newtodo;
     this.newstart = newstart;
@@ -36,6 +37,11 @@ app.use(session({secret: 'todotopsecret'}))
     next();
 })
 
+.use(function(req, res, next){
+    req.session.sevents = sevents;
+    next();
+})
+
 /* The to do list and the form are displayed */
 // .get('/todo/delete/:id', function(req, res) {
 //     if (req.params.id != '') {
@@ -50,6 +56,7 @@ app.use(session({secret: 'todotopsecret'}))
     //transfers preevents of all types to specific events
     for(var s = 0; s < events.length; s++)
     {
+        console.log(s);
         var hour = Object.values(events[s])[1];
         var dorn = Object.values(events[s])[2];
         var against = (hour + ":00" + dorn + "m");
@@ -59,15 +66,15 @@ app.use(session({secret: 'todotopsecret'}))
         if(!(equality))
         {
             //changes events so we can put all events out on clcick of a button :)
-            events = events.splice(s, 1);
-            s--;
+            sevents.push(Object.values(events[s][0]));//events = events.splice(s, 1);
+            //s--;
         }
     }
     //trims down objects to just their name input
-    for(var z = 0; s < events.length; s++)
-    {
-        events[s] = Object.values(events[s])[0];
-    }
+    // for(var z = 0; s < events.length; s++)
+    // {
+    //     events[s] = Object.values(events[s])[0];
+    // }
     res.redirect('/todo');
 })
 
@@ -75,7 +82,8 @@ app.use(session({secret: 'todotopsecret'}))
     res.render('todo.ejs', {
         events: req.session.events, 
         amlist: req.session.amlist, 
-        pmlist: req.session.pmlist});
+        pmlist: req.session.pmlist,
+        sevents: req.session.sevents});
 })
 
 /* Adding an item to the to do list */

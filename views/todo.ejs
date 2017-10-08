@@ -9,7 +9,7 @@
     </head>
 
     <body style= "text-align: center; width: 100%; background-color: #4286f4; color: white;">
-        <h1 style= "padding-bottom: 1rem; text-align: center; margin-left: 15%; margin-right: 15%; width: 70%; font-size: 4rem; font-family: Times; border-bottom: 2px solid white;">What's Going On?</h1>
+        <h1 style= "padding-bottom: 1rem; text-align: center; margin-left: 15%; margin-right: 15%; width: 70%; font-size: 4rem; font-family: Times; border-bottom: 2px solid white;">Toggle</h1>
 
         <ul = style= "padding-top: 0rem; list-style-type: none; display: inline-block;">
         <% amlist.forEach(function(am, index) { %>
@@ -29,7 +29,7 @@
             <div id="fill" >
                 <p style="font-size: 1.5rem; text-decoration: underline;">List of Events: </p>
                 <ul>
-                <% events.forEach(function(eve, index) { %>
+                <% sevents.forEach(function(eve, index) { %>
                     <li>
             <!-- <p id = "fill"></p> --> <%=eve%>
                     </li>
