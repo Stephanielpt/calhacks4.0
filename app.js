@@ -4,13 +4,8 @@ var bodyParser = require('body-parser'); // Loads the piece of middleware for ma
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var querystring = require('querystring');
 var url = require('url');
-// var page = url.parse(req.url).query;
 
-// var params = querystring.parse(url.parse(req.url).query);
-// params['hour'];
-// params['dorn'];
-
-var events = [{newtodo: "kill it", newstart: '12', aorp: 'a'}];
+var events = [{newtodo: "calhacks!", newstart: '10', aorp: 'a'}];
 
 function Event(newtodo, newstart, aorp) {
     this.newtodo = newtodo;
@@ -52,6 +47,7 @@ app.use(session({secret: 'todotopsecret'}))
 .get('/todo/:heure', function(req, res){ 
     var check = req.params.heure;
     console.log(check);
+    //transfers preevents of all types to specific events
     for(var s = 0; s < events.length; s++)
     {
         var hour = Object.values(events[s])[1];
@@ -63,9 +59,14 @@ app.use(session({secret: 'todotopsecret'}))
         if(!(equality))
         {
             //changes events so we can put all events out on clcick of a button :)
-            events.splice(s, 1);
+            events = events.splice(s, 1);
             s--;
         }
+    }
+    //trims down objects to just their name input
+    for(var z = 0; s < events.length; s++)
+    {
+        events[s] = Object.values(events[s])[0];
     }
     res.redirect('/todo');
 })

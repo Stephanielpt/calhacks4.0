@@ -1,0 +1,25 @@
+body {
+	font-family: Georgia, Helvetica, sans-serif;
+  	/*font-size: 2rem;*/
+  	line-height: 1rem;
+}
+
+h1 {
+	 font-family: Georgia, serif;
+  	font-size: 3rem;
+  	line-height: 1rem;
+  	font-weight: normal;
+  	text-align: center;
+  	padding-top: 4rem;
+  	padding-bottom: 1rem;
+    margin-top: 6rem;
+}
+
+button {
+  background-color: #4286f4;
+  padding-bottom: .5rem;
+}
+
+form {
+  border: 1px solid lightgray;
+}

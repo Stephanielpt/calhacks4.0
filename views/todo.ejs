@@ -8,49 +8,70 @@
         </style>
     </head>
 
-    <body>
-        <h1>What's Going On?</h1>
-        <ul = style= "list-style-type: none; display: inline-block;">
+    <body style= "text-align: center; width: 100%; background-color: #4286f4; color: white;">
+        <h1 style= "padding-bottom: 1rem; text-align: center; margin-left: 15%; margin-right: 15%; width: 70%; font-size: 4rem; font-family: Times; border-bottom: 2px solid white;">What's Going On?</h1>
+
+        <ul = style= "padding-top: 0rem; list-style-type: none; display: inline-block;">
         <% amlist.forEach(function(am, index) { %>
             <a href="/todo/heure=<%am%>">
-            <button style= "display: block; width: 4rem; padding: .5rem; border: 1px solid lightgray;"> <%= am %></button></a>
+            <button id = "hit" style= "padding-top: 0rem; margin: .5rem; margin-top: 0rem; background-color: white; color: #4286f4; display: block; width: 6rem; padding: .5rem; border: 1px solid lightgray;"> <%= am %></button></a>
         <% }); %>
         </ul>
         
         <ul = style= "list-style-type: none; display: inline-block;">
         <% pmlist.forEach(function(pm, index) { %>
             <a href="/todo/heure=<%pm%>">
-            <button style= "display: block; width: 4rem; padding: .5rem; border: 1px solid lightgray;"> <%= pm %></button></a>
+            <button id= "hit" style= "margin: .5rem; margin-top: 0rem; background-color: white; color: #4286f4; display: block; width: 6rem; padding: .5rem; border: 1px solid lightgray;"> <%= pm %></button></a>
         <% }); %>
         </ul>
 
         <ul = style= "list-style-type: none; display: inline-block;">
-            <div>
-            <!-- <p id = "fill"></p> --> <%=events%>
+            <div id="fill" >
+                <p style="font-size: 1.5rem; text-decoration: underline;">List of Events: </p>
+                <ul>
+                <% events.forEach(function(eve, index) { %>
+                    <li>
+            <!-- <p id = "fill"></p> --> <%=eve%>
+                    </li>
+                <%});%>
+                </ul>
             </div>
         </ul>
-
         <!---->
         <!---->
 
         <form action="/todo/add/" method="post">
-            <p = style= "padding-right: 2rem;">
+            <p = style= "padding-right: 2rem; display: inline-block;">
                 <label for="newtodo">My Event Name: </label>
                 <input type="text" name="newtodo" id="newtodo" autofocus />
                 
             </p>
-            <p = style= "padding-right: 2rem;">
+            <p = style= "padding-right: 2rem; display: inline-block;">
                 <label for="newtodo">My Event Start Time (only give the hour): </label>
                 <input type="text" name="newstart" id="newstart" autofocus />
                 
             </p>
-            <p>
+            <p = style= "display: inline-block;"">
                 <label for="newtodo">AM or PM (a/p): </label>
                 <input type="text" name="aorp" id="aorp" autofocus />
                 <input type="submit" />
             </p>
         </form>
 
+        <!-- <script>
+            document.getElementById("hit").addEventListener("click", showDiv());
+            function showDiv() {
+
+                if(document.getElementById("fill").style.display == "none")
+                {
+                    document.getElementById("fill").style.display = 'block';
+                    document.getElementById("fill").style.visibility = 'visible';
+                }
+                else {
+                    document.getElementById("fill").style.display = "none"
+                }
+            }
+        </script> -->
         <!-- <script>
             // var ids = new Array(24);
             // ids = ["12:00am", "1:00am", "2:00am", "3:00am", "4:00am", "5:00am", "6:00am", "7:00am", "8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm", "8:00pm", "9:00pm", "10:00pm", "11:00pm"];
