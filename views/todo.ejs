@@ -12,13 +12,13 @@
         <h1>What's Going On?</h1>
         <ul = style= "list-style-type: none; display: inline-block;">
         <% amlist.forEach(function(am, index) { %>
-            <button onclick= "addToContainer(<%am%>, <%events%>)" style= "display: block; width: 4rem; padding: .5rem; border: 1px solid lightgray;"> <%= am %></button>
+            <button id="butt" name="<%am%>" style= "display: block; width: 4rem; padding: .5rem; border: 1px solid lightgray;"> <%= am %></button>
         <% }); %>
         </ul>
         
         <ul = style= "list-style-type: none; display: inline-block;">
         <% pmlist.forEach(function(pm, index) { %>
-            <button onclick= "addToContainer(<%pm%>, <%events%>)" style= "display: block; width: 4rem; padding: .5rem; border: 1px solid lightgray;"> <%= pm %></button>
+            <button id= "butt" name="<%pm%>" style= "display: block; width: 4rem; padding: .5rem; border: 1px solid lightgray;"> <%= pm %></button>
         <% }); %>
         </ul>
 
@@ -50,27 +50,30 @@
         </form>
 
         <script>
-            var ids = new Array(24);
-            ids = ["12:00am", "1:00am", "2:00am", "3:00am", "4:00am", "5:00am", "6:00am", "7:00am", "8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm", "8:00pm", "9:00pm", "10:00pm", "11:00pm"];
-            var decoder = new Array(24)
-            var s;
-            for(s = 0; s < 24; s++)
+            // var ids = new Array(24);
+            // ids = ["12:00am", "1:00am", "2:00am", "3:00am", "4:00am", "5:00am", "6:00am", "7:00am", "8:00am", "9:00am", "10:00am", "11:00am", "12:00pm", "1:00pm", "2:00pm", "3:00pm", "4:00pm", "5:00pm", "6:00pm", "7:00pm", "8:00pm", "9:00pm", "10:00pm", "11:00pm"];
+            // var decoder = new Array(24)
+            // var s;
+            // for(s = 0; s < 24; s++)
+            // {
+            //     decoder[s] = s;
+            // } object.onclick = function(){myScript};
+            document.getElementById("butt").onclick = function(check, events) 
             {
-                decoder[s] = s;
-            }
-            function addToContainer(check, events) {
-                var b;
-                for(var a = 0; a < 24; a++)
+                var ap = 'am';
+                var eventsFinal = new Array();
+                for(var i = 0; i < events.length; i++)
                 {
-                    if(ids[a] == check)
+                    if(events[i].aorp == 'p')
                     {
-                        b = a;
+                        ap = 'pm';
                     }
-                    break;
+                    if(events[i].time + ':00' + ap == check)
+                    {
+                        event.push(events[i]);
+                    }
                 }
-                var e;
-                e = decoder[b];
-                document.getElementById("fill").innerHTML = <%events[e]%> + "plz";   
+                document.getElementById("fill").innerHTML = eventsFinal;
             }
         </script>
     </body>

@@ -6,14 +6,12 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 // var events = new Array(24);
 var iMax = 24;
 var jMax = 10;
-var events = new Array();
+var events = [];
 
-for (i=0;i<iMax;i++) {
-    events[i] = new Array();
-    for (j=0;j<jMax;j++) 
-    {
-        events[i][j] = '';
-    }
+function Event(newtodo, newstart, aorp) {
+    this.newtodo = newtodo;
+    this.newstart = newstart;
+    this.aorp = aorp;
 }
 
 var app = express();
@@ -42,235 +40,146 @@ app.use(session({secret: 'todotopsecret'}))
     next();
 })
 
-.use(function(req, res, next){
-        req.session.twelvea = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.elevena = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.tena = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.ninea = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.eighta = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.sevena = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.sixa = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.fivea = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.foura = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.threea = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.twoa = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.onea = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.twelveb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.elevenb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.tenb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.nineb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.eightb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.sevenb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.sixb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.fiveb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.fourb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.threeb = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.twob = [];
-    next();
-})
-.use(function(req, res, next){
-        req.session.oneb = [];
-    next();
-})
+// .use(function(req, res, next){
+//         req.session.twelvea = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.elevena = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.tena = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.ninea = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.eighta = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.sevena = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.sixa = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.fivea = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.foura = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.threea = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.twoa = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.onea = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.twelveb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.elevenb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.tenb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.nineb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.eightb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.sevenb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.sixb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.fiveb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.fourb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.threeb = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.twob = [];
+//     next();
+// })
+// .use(function(req, res, next){
+//         req.session.oneb = [];
+//     next();
+// })
 
 
 /* The to do list and the form are displayed */
 .get('/todo', function(req, res) { 
     res.render('todo.ejs', {events: events, 
-        twelvea: req.session.twelvea, 
-        elevena: req.session.elevena, 
-        tena: req.session.tena, 
-        ninea: req.session.ninea, 
-        eighta: req.session.eighta, 
-        sevena: req.session.sevena, 
-        sixa: req.session.sixa, 
-        fivea: req.session.fivea, 
-        foura: req.session.foura, 
-        threea: req.session.threea, 
-        twoa: req.session.twoa, 
-        onea: req.session.onea, 
-        twelveb: req.session.twelveb, 
-        elevenb: req.session.elevenb, 
-        tenb: req.session.tenb, 
-        nineb: req.session.nineb, 
-        eightb: req.session.eightb, 
-        sevenb: req.session.sevenb, 
-        sixb: req.session.sixb, 
-        fiveb: req.session.fiveb, 
-        fourb: req.session.fourb, 
-        threeb: req.session.threeb, 
-        twob: req.session.twob, 
-        oneb: req.session.oneb, 
+        // twelvea: req.session.twelvea, 
+        // elevena: req.session.elevena, 
+        // tena: req.session.tena, 
+        // ninea: req.session.ninea, 
+        // eighta: req.session.eighta, 
+        // sevena: req.session.sevena, 
+        // sixa: req.session.sixa, 
+        // fivea: req.session.fivea, 
+        // foura: req.session.foura, 
+        // threea: req.session.threea, 
+        // twoa: req.session.twoa, 
+        // onea: req.session.onea, 
+        // twelveb: req.session.twelveb, 
+        // elevenb: req.session.elevenb, 
+        // tenb: req.session.tenb, 
+        // nineb: req.session.nineb, 
+        // eightb: req.session.eightb, 
+        // sevenb: req.session.sevenb, 
+        // sixb: req.session.sixb, 
+        // fiveb: req.session.fiveb, 
+        // fourb: req.session.fourb, 
+        // threeb: req.session.threeb, 
+        // twob: req.session.twob, 
+        // oneb: req.session.oneb, 
         amlist: req.session.amlist, 
         pmlist: req.session.pmlist});
 })
 
 /* Adding an item to the to do list */
 .post('/todo/add/', urlencodedParser, function(req, res) {
-    if (req.body.newtodo != '') {
-        if(req.body.aorp == 'a' && req.body.newstart == 12)
+    if (req.body.newtodo != '') 
+    {
+        if(req.body.aorp == 'a' || req.body.aorp == 'p') 
         {
-            events[0].push([req.body.newtodo]);
-            console.log(events[0]);
-        }
-        if(req.body.aorp == 'a' && req.body.newstart == 11)
-        {
-            events[1].push([req.body.newtodo]);
-            console.log(events[1]);
-        }
-        if(req.body.aorp == 'a' && req.body.newstart == 10)
-        {
-            events[2].push([req.body.newtodo]);
-        }
-        if(req.body.aorp == 'a' && req.body.newstart == 9)
-        {
-            events[3].push([req.body.newtodo]);
-        }
-        if(req.body.aorp == 'a' && req.body.newstart == 8)
-        {
-            events[4].push([req.body.newtodo]);
-        }
-        if(req.body.aorp == 'a' && req.body.newstart == 7)
-        {
-            events[5].push([req.body.newtodo]);     
-        }   
-        if(req.body.aorp == 'a' && req.body.newstart == 6)
-        {
-            events[6].push([req.body.newtodo]);     
-        }   
-        if(req.body.aorp == 'a' && req.body.newstart == 5)
-        {
-            events[7].push([req.body.newtodo]);   
-        }     
-        if(req.body.aorp == 'a' && req.body.newstart == 4)
-        {
-            events[8].push([req.body.newtodo]);      
-        }  
-        if(req.body.aorp == 'a' && req.body.newstart == 3)
-        {
-            events[9].push([req.body.newtodo]);     
-        }   
-        if(req.body.aorp == 'a' && req.body.newstart == 2)
-        {
-            events[10].push([req.body.newtodo]); 
-        }       
-        if(req.body.aorp == 'a' && req.body.newstart == 1)
-        {
-            events[11].push([req.body.newtodo]);  
-        }      
-        if(req.body.aorp == 'p' && req.body.newstart == 12)
-        {
-            events[12].push([req.body.newtodo]); 
-        }       
-        if(req.body.aorp == 'p' && req.body.newstart == 11)
-        {
-            events[13].push([req.body.newtodo]);  
-        }      
-        if(req.body.aorp == 'p' && req.body.newstart == 10)
-        {
-            events[14].push([req.body.newtodo]);   
-        }     
-        if(req.body.aorp == 'p' && req.body.newstart == 9)
-        {
-            events[15].push([req.body.newtodo]); 
-        }       
-        if(req.body.aorp == 'p' && req.body.newstart == 8)
-        {
-            events[16].push([req.body.newtodo]); 
-        }       
-        if(req.body.aorp == 'p' && req.body.newstart == 7)
-        {
-            events[17].push([req.body.newtodo]);  
-        }      
-        if(req.body.aorp == 'p' && req.body.newstart == 6)
-        {
-            events[18].push([req.body.newtodo]);   
-        }     
-        if(req.body.aorp == 'p' && req.body.newstart == 5)
-        {
-            events[19].push([req.body.newtodo]); 
-        }       
-        if(req.body.aorp == 'p' && req.body.newstart == 4)
-        {
-            events[20].push([req.body.newtodo]); 
-        }       
-        if(req.body.aorp == 'p' && req.body.newstart == 3)
-        {
-            events[21].push([req.body.newtodo]);        
-        }
-        if(req.body.aorp == 'p' && req.body.newstart == 2)
-        {
-            revents[22].push([req.body.newtodo]);        
-        }
-        if(req.body.aorp == 'p' && req.body.newstart == 1)
-        {
-            events[23].push([req.body.newtodo]);        
+            if (req.body.newstart >= 0 && req.body.newstart <= 12)
+            {
+                events.push(new Event(req.body.newtodo, req.body.newstart, req.body.aorp));
+                console.log(events);
+            }
         }
     }
     res.redirect('/todo');
