@@ -67,6 +67,7 @@ app.use(session({secret: 'todotopsecret'}))
             s--;
         }
     }
+    res.redirect('/todo');
 })
 
 .get('/todo', function(req, res){ 
