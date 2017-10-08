@@ -2,11 +2,15 @@ var express = require('express');
 var session = require('cookie-session'); // Loads the piece of middleware for sessions
 var bodyParser = require('body-parser'); // Loads the piece of middleware for managing the settings
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var querystring = require('querystring');
+var url = require('url');
+// var page = url.parse(req.url).query;
 
-// var events = new Array(24);
-var iMax = 24;
-var jMax = 10;
-var events = [];
+// var params = querystring.parse(url.parse(req.url).query);
+// params['hour'];
+// params['dorn'];
+
+var events = [{newtodo: "kill it", newstart: '12', aorp: 'a'}];
 
 function Event(newtodo, newstart, aorp) {
     this.newtodo = newtodo;
@@ -21,10 +25,7 @@ var ams = ["12:00am","1:00am","2:00am","3:00am","4:00am","5:00am","6:00am","7:00
 /* Using the sessions */
 app.use(session({secret: 'todotopsecret'}))
 
-
 //what to print out - the lsit of events going on at all hours - really[24][10]
-
-
 .use(function(req, res, next){
     req.session.amlist = ["12:00am","1:00am","2:00am","3:00am","4:00am","5:00am","6:00am","7:00am","8:00am","9:00am","10:00am","11:00am"];
     next();
@@ -40,131 +41,37 @@ app.use(session({secret: 'todotopsecret'}))
     next();
 })
 
-// .use(function(req, res, next){
-//         req.session.twelvea = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.elevena = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.tena = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.ninea = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.eighta = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.sevena = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.sixa = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.fivea = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.foura = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.threea = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.twoa = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.onea = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.twelveb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.elevenb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.tenb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.nineb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.eightb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.sevenb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.sixb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.fiveb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.fourb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.threeb = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.twob = [];
-//     next();
-// })
-// .use(function(req, res, next){
-//         req.session.oneb = [];
-//     next();
-// })
-
-
 /* The to do list and the form are displayed */
-.get('/todo', function(req, res) { 
-    res.render('todo.ejs', {events: events, 
-        // twelvea: req.session.twelvea, 
-        // elevena: req.session.elevena, 
-        // tena: req.session.tena, 
-        // ninea: req.session.ninea, 
-        // eighta: req.session.eighta, 
-        // sevena: req.session.sevena, 
-        // sixa: req.session.sixa, 
-        // fivea: req.session.fivea, 
-        // foura: req.session.foura, 
-        // threea: req.session.threea, 
-        // twoa: req.session.twoa, 
-        // onea: req.session.onea, 
-        // twelveb: req.session.twelveb, 
-        // elevenb: req.session.elevenb, 
-        // tenb: req.session.tenb, 
-        // nineb: req.session.nineb, 
-        // eightb: req.session.eightb, 
-        // sevenb: req.session.sevenb, 
-        // sixb: req.session.sixb, 
-        // fiveb: req.session.fiveb, 
-        // fourb: req.session.fourb, 
-        // threeb: req.session.threeb, 
-        // twob: req.session.twob, 
-        // oneb: req.session.oneb, 
+// .get('/todo/delete/:id', function(req, res) {
+//     if (req.params.id != '') {
+//         console.log(req.params.id);
+//         req.session.todolista.splice(req.params.id, 1);
+//     }
+//     res.redirect('/todo');
+// })
+.get('/todo/:heure', function(req, res){ 
+    var check = req.params.heure;
+    console.log(check);
+    for(var s = 0; s < events.length; s++)
+    {
+        var hour = Object.values(events[s])[1];
+        var dorn = Object.values(events[s])[2];
+        var against = (hour + ":00" + dorn + "m");
+        console.log(against);
+        var equality = (against == check);
+        console.log(equality);
+        if(!(equality))
+        {
+            //changes events so we can put all events out on clcick of a button :)
+            events.splice(s, 1);
+            s--;
+        }
+    }
+})
+
+.get('/todo', function(req, res){ 
+    res.render('todo.ejs', {
+        events: req.session.events, 
         amlist: req.session.amlist, 
         pmlist: req.session.pmlist});
 })
@@ -197,6 +104,7 @@ app.use(session({secret: 'todotopsecret'}))
 /* Redirects to the to do list if the page requested is not found */
 .use(function(req, res, next){
     res.redirect('/todo');
+    console.log("couldnt find it");
 })
 
 .listen(8080);   
