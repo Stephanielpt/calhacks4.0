@@ -5,8 +5,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var querystring = require('querystring');
 var url = require('url');
 
-var events = [{newtodo: "calhacks!", newstart: '10', aorp: 'a'}];
-var sevents = ["calhacks!"];
+var events = [{newtodo: "calhacks!", newstart: '10', aorp: 'a'}, {newtodo: "homework :(", newstart: '10', aorp: 'a'}];
+var sevents = ["calhacks!", "homework :("];
 //initialize sevents like u did for events
 function Event(newtodo, newstart, aorp) {
     this.newtodo = newtodo;
@@ -68,6 +68,7 @@ app.use(session({secret: 'todotopsecret'}))
             //changes events so we can put all events out on clcick of a button :)
             sevents.push(Object.values(events[s][0]));//events = events.splice(s, 1);
             //s--;
+            console.log('hey:' + sevents)
         }
     }
     //trims down objects to just their name input
